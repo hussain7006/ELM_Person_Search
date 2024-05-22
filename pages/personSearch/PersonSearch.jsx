@@ -14,7 +14,7 @@ const PersonSearch = () => {
     const [redisImages, setRedisImages] = useState(null)
 
 
-    const flaskUrl = `http://192.168.18.101:5000`
+    const flaskUrl = constants.baseUrl;
 
     const handleStartStream = async () => {
         setIsStreamRunning(true)
@@ -41,8 +41,11 @@ const PersonSearch = () => {
         formData.append('top_n', 5);
 
 
+        const url = flaskUrl + '/upload';
 
-        fetch(flaskUrl + '/upload', {
+        console.log("url:", url);
+
+        fetch(url, {
             method: 'POST',
             body: formData
         })
@@ -51,7 +54,11 @@ const PersonSearch = () => {
                 // const responseImagesContainer = document.getElementById('response-images');
                 // responseImagesContainer.innerHTML = '';
 
-                console.log(data);
+                console.log(data.result_path);
+
+                if (data?.result_path) {
+                    setRedisImages(data.result_path)
+                }
 
                 // data.result_path.forEach((outputPath, index) => {
                 //     const imageContainer = document.createElement('div');
@@ -104,6 +111,8 @@ const PersonSearch = () => {
 
     const CameraStream = ({ feedType, device }) => {
         const videoUrl = `${flaskUrl}/video_feed/${feedType}/${device}`;
+
+        // console.log("videoUrl:", videoUrl);
         return (
             <div>
                 {!isStreamRunning && (
@@ -246,7 +255,7 @@ const PersonSearch = () => {
                             } */}
 
 
-                            <CameraStream feedType="yolo" device="0" />
+                            <CameraStream feedType="camera" device="0" />
 
 
                             {

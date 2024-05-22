@@ -11,8 +11,6 @@ const ImageSlider = ({ redisImages }) => {
         {
             original: "/images/male-user.png",
             thumbnail: "/images/male-user.png",
-
-
         },
         {
             original: "/images/male-user.png",
@@ -26,26 +24,26 @@ const ImageSlider = ({ redisImages }) => {
             original: "/images/male-user.png",
             thumbnail: "/images/male-user.png",
         },
-        {
-            original: "/images/male-user.png",
-            thumbnail: "/images/male-user.png",
-        },
-        {
-            original: "/images/male-user.png",
-            thumbnail: "/images/male-user.png",
-        },
-        {
-            original: "/images/male-user.png",
-            thumbnail: "/images/male-user.png",
-        },
-        {
-            original: "/images/male-user.png",
-            thumbnail: "/images/male-user.png",
-        },
-        {
-            original: "/images/male-user.png",
-            thumbnail: "/images/male-user.png",
-        },
+        // {
+        //     original: "/images/male-user.png",
+        //     thumbnail: "/images/male-user.png",
+        // },
+        // {
+        //     original: "/images/male-user.png",
+        //     thumbnail: "/images/male-user.png",
+        // },
+        // {
+        //     original: "/images/male-user.png",
+        //     thumbnail: "/images/male-user.png",
+        // },
+        // {
+        //     original: "/images/male-user.png",
+        //     thumbnail: "/images/male-user.png",
+        // },
+        // {
+        //     original: "/images/male-user.png",
+        //     thumbnail: "/images/male-user.png",
+        // },
 
         // {
         //     original: "https://picsum.photos/id/1019/1000/600/",
@@ -61,22 +59,30 @@ const ImageSlider = ({ redisImages }) => {
         // },
     ])
     useEffect(() => {
+        console.log("images");
+        console.log(images);
         if (redisImages) {
             const structuredImages = redisImages.map((item) => {
+
+                let path = item.split("public")
+                path = path[1].replace(/\\/g, "/")
+                if (path.startsWith("//")) {
+                    path = path.slice(1); // Remove the leading slash if there are two
+                }
                 return {
-                    original: item,
-                    thumbnail: item,
+                    original: path,
+                    thumbnail: path,
 
                 }
             })
 
             setImages([...structuredImages])
         }
-    }, [])
+    }, [redisImages])
 
 
 
-    console.log(images);
+    // console.log(images);
     return (
         <div style={{
             boxSizing: "border-box",
