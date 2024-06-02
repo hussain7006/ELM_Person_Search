@@ -12,6 +12,8 @@ const PersonSearch = () => {
     const [isStreamRunning, setIsStreamRunning] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [selectedFile, setSelectedFile] = useState(null);
+    const [threshold, setThreshold] = useState(200);
+    const [topN, setTopN] = useState(5);
 
     const [redisImages, setRedisImages] = useState(null)
 
@@ -40,7 +42,8 @@ const PersonSearch = () => {
 
         var formData = new FormData();
         formData.append('file', selectedFile);
-        formData.append('top_n', 5);
+        formData.append('top_n',topN);
+        formData.append('threshold', threshold);
 
 
         const url = flaskUrl + '/upload';
@@ -284,7 +287,7 @@ const PersonSearch = () => {
                             defaultValue={350}
                             step={50}
                             max={1000}
-
+                            onChange={(e) => setThreshold(e.target.value)}
                         />
                     </div>
                 </div>
