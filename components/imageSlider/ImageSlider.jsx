@@ -11,39 +11,39 @@ const ImageSlider = ({ redisImages }) => {
         {
             original: "/images/male-user.png",
             thumbnail: "/images/male-user.png",
+            description: `<ul>
+                            <li>Timestamp: 30/05/2024 - 12:48:31</li>
+                            <li>Distance: 488.360687256</li>
+                            <li>Camera Id: Camera1</li>
+                        </ul>`
         },
         {
             original: "/images/male-user.png",
             thumbnail: "/images/male-user.png",
+            description: `<ul>
+                            <li>Timestamp: 30/05/2024 - 12:48:31</li>
+                            <li>Distance: 488.360687256</li>
+                            <li>Camera Id: Camera1</li>
+                        </ul>`
         },
         {
             original: "/images/male-user.png",
             thumbnail: "/images/male-user.png",
+            description: `<ul>
+                            <li>Timestamp: 30/05/2024 - 12:48:31</li>
+                            <li>Distance: 488.360687256</li>
+                            <li>Camera Id: Camera1</li>
+                        </ul>`
         },
         {
             original: "/images/male-user.png",
             thumbnail: "/images/male-user.png",
+            description: `<ul>
+                            <li>Timestamp: 30/05/2024 - 12:48:31</li>
+                            <li>Distance: 488.360687256</li>
+                            <li>Camera Id: Camera1</li>
+                        </ul>`
         },
-        // {
-        //     original: "/images/male-user.png",
-        //     thumbnail: "/images/male-user.png",
-        // },
-        // {
-        //     original: "/images/male-user.png",
-        //     thumbnail: "/images/male-user.png",
-        // },
-        // {
-        //     original: "/images/male-user.png",
-        //     thumbnail: "/images/male-user.png",
-        // },
-        // {
-        //     original: "/images/male-user.png",
-        //     thumbnail: "/images/male-user.png",
-        // },
-        // {
-        //     original: "/images/male-user.png",
-        //     thumbnail: "/images/male-user.png",
-        // },
 
         // {
         //     original: "https://picsum.photos/id/1019/1000/600/",
@@ -59,8 +59,8 @@ const ImageSlider = ({ redisImages }) => {
         // },
     ])
     useEffect(() => {
-        console.log("images");
-        console.log(images);
+        // console.log("images");
+        // console.log(images);
         if (redisImages) {
             const structuredImages = redisImages.map((item) => {
 
@@ -82,6 +82,23 @@ const ImageSlider = ({ redisImages }) => {
 
 
 
+
+    const renderItem = (item) => {
+        return (
+            <div className="">
+                <img src={item.original} alt={item.description} />
+                <div>
+
+                    {item.description && (
+                        <span
+                            className="image-gallery-description"
+                            dangerouslySetInnerHTML={{ __html: item.description }}
+                        ></span>
+                    )}
+                </div>
+            </div>
+        );
+    };
     // console.log(images);
     return (
         <div style={{
@@ -107,6 +124,7 @@ const ImageSlider = ({ redisImages }) => {
                 loading="lazy" // eager
                 additionalClass="image-gallery-custom"
                 originalHeight={true}
+                renderItem={renderItem}
             />
         </div>
     )

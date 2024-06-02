@@ -4,6 +4,8 @@ import ImageSlider from '../../components/imageSlider/ImageSlider'
 import { Oval } from 'react-loader-spinner'
 
 import styles from "./personSearch.module.css"
+import { Slider, Tooltip, Typography, styled } from '@mui/material'
+import PropTypes from 'prop-types';
 
 const PersonSearch = () => {
 
@@ -164,8 +166,58 @@ const PersonSearch = () => {
 
     //     checkApi();
     // }, [])
+    function ValueLabelComponent(props) {
+        const { children, value } = props;
 
+        return (
+            <Tooltip enterTouchDelay={0} placement="top" title={value}>
+                {children}
+            </Tooltip>
+        );
+    }
+    ValueLabelComponent.propTypes = {
+        children: PropTypes.element.isRequired,
+        value: PropTypes.number.isRequired,
+    };
 
+    const PrettoSlider = styled(Slider)({
+        color: '#52af77',
+        height: 8,
+        '& .MuiSlider-track': {
+            border: 'none',
+        },
+        '& .MuiSlider-thumb': {
+            height: 24,
+            width: 24,
+            backgroundColor: '#fff',
+            border: '2px solid currentColor',
+            '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                boxShadow: 'inherit',
+            },
+            '&::before': {
+                display: 'none',
+            },
+        },
+        '& .MuiSlider-valueLabel': {
+            lineHeight: 1.2,
+            fontSize: 12,
+            background: 'unset',
+            padding: 0,
+            width: 32,
+            height: 32,
+            borderRadius: '50% 50% 50% 0',
+            backgroundColor: '#52af77',
+            transformOrigin: 'bottom left',
+            transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+            '&::before': { display: 'none' },
+            '&.MuiSlider-valueLabelOpen': {
+                transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+            },
+            '& > *': {
+                transform: 'rotate(45deg)',
+            },
+        },
+    });
     return (
         <main
             style={{
@@ -185,16 +237,56 @@ const PersonSearch = () => {
                     borderBottom: !constants.showBorders ? "5px solid rgba(56, 65, 74, 0.1)" : "5px solid red",
                     boxSizing: "border-box",
                     height: "150px",
-                    display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: 20,
+                    display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "", gap: 20,
                     padding: "0px 10px",
 
 
                 }}
             >
-                <label htmlFor="uploadImage" style={{ background: "lightgray", width: "max-content", padding: "5px 10px", fontSize: 25, borderRadius: "5px", fontWeight: "bold", color: "rgba(0,0,0,0.7)" }}>Find Person</label>
-                <div>
-                    <input id='uploadImage' className={styles.uploadImage} type="file" onChange={handleImageUploadOnchange} />
-                    <button className={styles.uploadButton} onClick={handleUploadImageButton}>UPLOAD</button>
+                <div style={{
+                    border: constants.showBorders ? "5px solid brown" : "none",
+                    borderBottom: constants.showBorders && "5px solid red",
+                    boxSizing: "border-box",
+                    display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: 20,
+                    height: "100%",
+                }}>
+                    <label htmlFor="uploadImage" style={{ background: "lightgray", width: "max-content", padding: "5px 10px", fontSize: 25, borderRadius: "5px", fontWeight: "bold", color: "rgba(0,0,0,0.7)" }}>FIND PERSON</label>
+                    <div>
+                        <input id='uploadImage' className={styles.uploadImage} type="file" onChange={handleImageUploadOnchange} />
+                        <button className={styles.uploadButton} onClick={handleUploadImageButton}>UPLOAD</button>
+                    </div>
+                </div>
+                <div style={{
+                    border: constants.showBorders ? "5px solid brown" : "none",
+                    borderBottom: constants.showBorders && "5px solid red",
+                    boxSizing: "border-box",
+                    display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: 20,
+                    height: "100%", width: "18vw", padding: "0px 8px",
+                    position: "relative"
+                }}>
+                    <label htmlFor="threshold" style={{ position: "relative", top: "10", background: "lightgray", width: "max-content", padding: "5px 10px", fontSize: 25, borderRadius: "5px", fontWeight: "bold", color: "rgba(0,0,0,0.7)" }}>THRESHOLD</label>
+                    <div style={{
+                        width: "100%", height: 40,
+                        position: "relative", bottom: 0
+                    }}>
+                        {/* <Typography gutterBottom>Tooltip value label</Typography> */}
+                        {/* <Slider
+                            valueLabelDisplay="auto"
+                            slots={{
+                                valueLabel: ValueLabelComponent,
+                            }}
+                            aria-label="custom thumb label"
+                            defaultValue={20}
+                        /> */}
+                        <PrettoSlider
+                            valueLabelDisplay="auto"
+                            aria-label="pretto slider"
+                            defaultValue={350}
+                            step={50}
+                            max={1000}
+
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -209,7 +301,7 @@ const PersonSearch = () => {
                 }}
             >
                 {/* Stream section */}
-                <section
+                <div
                     style={{
                         border: constants.showBorders ? "5px solid blue" : "none",
                         borderRight: !constants.showBorders ? "5px solid rgba(56, 65, 74, 0.1)" : "5px solid blue",
@@ -220,7 +312,7 @@ const PersonSearch = () => {
 
                     }}
                 >
-                    <div style={{ background: "lightgray", width: "max-content", padding: "0px 10px", borderRadius: "10px", fontSize: 28, fontWeight: "bold", color: "rgba(0,0,0,0.7)", marginBottom: "2vh" }}>Stream</div>
+                    <div style={{ background: "lightgray", width: "max-content", padding: "0px 10px", borderRadius: "10px", fontSize: 28, fontWeight: "bold", color: "rgba(0,0,0,0.7)", marginBottom: "2vh" }}>STREAM</div>
                     <div
                         style={{
                             border: constants.showBorders ? "5px solid pink" : "none",
@@ -294,10 +386,10 @@ const PersonSearch = () => {
                             } */}
                         </div>
                     </div>
-                </section>
+                </div>
 
                 {/* Result Section */}
-                <section
+                <div
                     style={{
                         border: constants.showBorders ? "5px solid blue" : "none",
                         borderRight: !constants.showBorders ? "5px solid rgba(56, 65, 74, 0.1)" : "5px solid blue",
@@ -308,7 +400,7 @@ const PersonSearch = () => {
 
                     }}
                 >
-                    <div style={{ background: "lightgray", width: "max-content", padding: "0px 10px", borderRadius: "10px", fontSize: 28, fontWeight: "bold", color: "rgba(0,0,0,0.7)", marginBottom: "2vh" }}>Results</div>
+                    <div style={{ background: "lightgray", width: "max-content", padding: "0px 10px", borderRadius: "10px", fontSize: 28, fontWeight: "bold", color: "rgba(0,0,0,0.7)", marginBottom: "2vh" }}>RESULTS</div>
                     <div style={{
                         border: constants.showBorders ? "5px solid pink" : "none",
                         boxSizing: "border-box",
@@ -319,7 +411,7 @@ const PersonSearch = () => {
 
                         <ImageSlider redisImages={redisImages} />
                     </div>
-                </section>
+                </div>
 
             </section>
         </main >
